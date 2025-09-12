@@ -1,0 +1,31 @@
+{
+  "name": "mcp-x402",
+  "version": "0.1.0",
+  "description": "A minimal MCP server that can be used to generate a X402 payment header",
+  "packageManager": "yarn@4.9.4",
+  "license": "MIT",
+  "main": "build/index.js",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./build/index.d.ts",
+      "import": "./build/index.mjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "start": "node build/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.5",
+    "dotenv": "^17.2.2",
+    "viem": "^2.37.5",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@tsconfig/node22": "^22.0.0",
+    "@types/node": "^22.13.10",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  }
+}
