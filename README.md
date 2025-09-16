@@ -15,7 +15,7 @@ It exposes two mcp tools:
 - *LookupAddress* which will lookup the address for account that is used to sign the payment header. Lazily create the account if it does not exist.
 
 
-[Learn more about MCP](https://github.com/modelcontextprotocol/spec)
+[Learn more about MCP](https://modelcontextprotocol.io/docs/getting-started/intro)
 
 [Learn more about x402](https://www.x402.org/)
 
