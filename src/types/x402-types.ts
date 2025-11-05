@@ -11,7 +11,7 @@ export const NetworkSchema = z.enum([
   "sei",
   "sei-testnet",
   "linea",
-  "linea-sepolia"
+  "linea-sepolia",
 ]);
 export const NetworkToChainId = new Map([
   ["base-sepolia", 84532],
@@ -25,13 +25,11 @@ export const NetworkToChainId = new Map([
   ["linea-sepolia", 59141],
 ]);
 
-
-const isInteger: (value: string) => boolean = value =>
+const isInteger: (value: string) => boolean = (value) =>
   Number.isInteger(Number(value)) && Number(value) >= 0;
 
 const AddressRegex = /^0x[0-9a-fA-F]{40}$/;
 const Address = z.string().regex(AddressRegex);
-
 
 const SignatureRegex = /^0x[0-9a-fA-F]+$/; // Flexible hex signature validation
 
@@ -64,8 +62,6 @@ export const PaymentRequirementsSchema = z.object({
 
 export type PaymentRequirements = z.infer<typeof PaymentRequirementsSchema>;
 
-
-
 export const PayloadAuthorizationSchema = z.object({
   from: z.string().regex(AddressRegex),
   to: z.string().regex(AddressRegex),
@@ -76,7 +72,6 @@ export const PayloadAuthorizationSchema = z.object({
 });
 
 export type PayloadAuthorization = z.infer<typeof PayloadAuthorizationSchema>;
-
 
 export const PayloadSchema = z.object({
   signature: z.string().regex(SignatureRegex),

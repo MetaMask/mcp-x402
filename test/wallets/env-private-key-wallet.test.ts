@@ -25,7 +25,11 @@ describe("Env Private Key Wallet", () => {
 
     const account = envPrivateKeyWalletClient();
 
-    assert.strictEqual(account, null, "Should return null when PRIVATE_KEY is not set");
+    assert.strictEqual(
+      account,
+      null,
+      "Should return null when PRIVATE_KEY is not set",
+    );
   });
 
   it("should return null when PRIVATE_KEY is empty string", () => {
@@ -33,7 +37,11 @@ describe("Env Private Key Wallet", () => {
 
     const account = envPrivateKeyWalletClient();
 
-    assert.strictEqual(account, null, "Should return null when PRIVATE_KEY is empty");
+    assert.strictEqual(
+      account,
+      null,
+      "Should return null when PRIVATE_KEY is empty",
+    );
   });
 
   it("should create account when PRIVATE_KEY is set", () => {
@@ -47,7 +55,7 @@ describe("Env Private Key Wallet", () => {
     assert.match(
       account?.address || "",
       /^0x[a-fA-F0-9]{40}$/,
-      "Should have valid address format"
+      "Should have valid address format",
     );
   });
 
@@ -61,7 +69,7 @@ describe("Env Private Key Wallet", () => {
     assert.strictEqual(
       account1?.address,
       account2?.address,
-      "Same private key should produce same address"
+      "Same private key should produce same address",
     );
   });
 
@@ -88,11 +96,14 @@ describe("Env Private Key Wallet", () => {
     const account = envPrivateKeyWalletClient();
 
     assert.ok(account, "Account should exist");
-    assert.ok(account?.signTypedData, "Account should have signTypedData method");
+    assert.ok(
+      account?.signTypedData,
+      "Account should have signTypedData method",
+    );
     assert.strictEqual(
       typeof account?.signTypedData,
       "function",
-      "signTypedData should be a function"
+      "signTypedData should be a function",
     );
   });
 });

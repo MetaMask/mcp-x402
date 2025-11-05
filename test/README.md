@@ -13,6 +13,7 @@ yarn test
 ### ERROR Messages from TestTransport (FIXED in fork)
 
 ~~You may see ERROR messages like:~~
+
 ```
 ERROR  [TestTransport] Please connect to a server first!
 ```

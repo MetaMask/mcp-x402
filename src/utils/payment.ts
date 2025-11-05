@@ -1,8 +1,14 @@
 import { Address, Chain, LocalAccount, Transport } from "viem";
 import { createNonce, signAuthorization } from "./sign";
-import { NetworkSchema, PayloadSchema, schemes, x402Versions, PaymentRequirements, Payload } from "../types/x402-types";
+import {
+  NetworkSchema,
+  PayloadSchema,
+  schemes,
+  x402Versions,
+  PaymentRequirements,
+  Payload,
+} from "../types/x402-types";
 import { z } from "zod";
-
 
 /**
  * Prepares an unsigned payment header with the given sender address and payment requirements.
@@ -51,7 +57,10 @@ function preparePaymentHeader(
  * @param unsignedPaymentHeader - The unsigned payment payload to be signed
  * @returns A promise that resolves to the signed payment payload
  */
-async function signPaymentHeader<transport extends Transport, chain extends Chain>(
+async function signPaymentHeader<
+  transport extends Transport,
+  chain extends Chain,
+>(
   delegatorAccount: LocalAccount,
   paymentRequirements: PaymentRequirements,
   unsignedPaymentHeader: UnsignedPaymentPayload,
@@ -85,13 +94,24 @@ async function createPayment<transport extends Transport, chain extends Chain>(
   paymentRequirements: PaymentRequirements[],
 ): Promise<PaymentPayload> {
   const from = delegatorAccount.address;
-  const selectedPaymentRequirements = preferredPaymentRequirements(paymentRequirements);
-  const unsignedPaymentHeader = preparePaymentHeader(from, x402Version, selectedPaymentRequirements);
-  return signPaymentHeader(delegatorAccount, selectedPaymentRequirements, unsignedPaymentHeader);
+  const selectedPaymentRequirements =
+    preferredPaymentRequirements(paymentRequirements);
+  const unsignedPaymentHeader = preparePaymentHeader(
+    from,
+    x402Version,
+    selectedPaymentRequirements,
+  );
+  return signPaymentHeader(
+    delegatorAccount,
+    selectedPaymentRequirements,
+    unsignedPaymentHeader,
+  );
 }
 
 //TODO implement a search and select logic for the preferred payment requirements
-function preferredPaymentRequirements(paymentRequirements: PaymentRequirements[]): PaymentRequirements {
+function preferredPaymentRequirements(
+  paymentRequirements: PaymentRequirements[],
+): PaymentRequirements {
   return paymentRequirements[0];
 }
 
@@ -108,41 +128,41 @@ export async function createPaymentHeader(
   x402Version: number,
   paymentRequirements: PaymentRequirements[],
 ): Promise<string> {
-
   const payment = await createPayment(client, x402Version, paymentRequirements);
   return encodePayment(payment);
 }
 
-
 function encodePayment(payment: PaymentPayload): string {
   let safe: PaymentPayload;
 
-    const evmPayload = payment.payload as Payload;
-    safe = {
-      ...payment,
-      payload: {
-        ...evmPayload,
-        authorization: Object.fromEntries(
-          Object.entries(evmPayload.authorization).map(([key, value]) => [
-            key,
-            typeof value === "bigint" ? (value as bigint).toString() : value,
-          ]),
-        ) as Payload["authorization"],
-      },
-    };
-    return safeBase64Encode(JSON.stringify(safe));
+  const evmPayload = payment.payload as Payload;
+  safe = {
+    ...payment,
+    payload: {
+      ...evmPayload,
+      authorization: Object.fromEntries(
+        Object.entries(evmPayload.authorization).map(([key, value]) => [
+          key,
+          typeof value === "bigint" ? (value as bigint).toString() : value,
+        ]),
+      ) as Payload["authorization"],
+    },
+  };
+  return safeBase64Encode(JSON.stringify(safe));
 }
 
-
 function safeBase64Encode(data: string): string {
-  if (typeof globalThis !== "undefined" && typeof globalThis.btoa === "function") {
+  if (
+    typeof globalThis !== "undefined" &&
+    typeof globalThis.btoa === "function"
+  ) {
     return globalThis.btoa(data);
   }
   return Buffer.from(data).toString("base64");
 }
 
- const PaymentPayloadSchema = z.object({
-  x402Version: z.number().refine(val => x402Versions.includes(val as 1)),
+const PaymentPayloadSchema = z.object({
+  x402Version: z.number().refine((val) => x402Versions.includes(val as 1)),
   scheme: z.enum(schemes),
   network: NetworkSchema,
   payload: PayloadSchema,

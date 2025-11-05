@@ -1,5 +1,3 @@
-
-
 curl https://x402.smoyer.dev/premium-joke | jq ./accepts
 
 ```
@@ -30,23 +28,23 @@ curl -H "X-PAYMENT: eyJ4NDAyVmVyc2lvbiI6MSwic2NoZW1lIjoiZXhhY3QiLCJuZXR3b3JrIjoi
 
 curl https://blast-mainnet.gateway.din.dev/rpc -d '{"jsonrpc":"2.0","id":1,"method":"eth_chainId"}' -H "Content-Type:application/json" | jq .
 {
-  "accepts": [
-    {
-      "scheme": "exact",
-      "network": "base",
-      "maxAmountRequired": "20",
-      "resource": "http://example.com/rpc",
-      "description": "Call to 1 method: eth_chainId",
-      "mimeType": "",
-      "payTo": "0x8d6Efb97F6E3d218647eD74AF418d47489550Ae2",
-      "maxTimeoutSeconds": 60,
-      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-      "extra": {
-        "name": "USD Coin",
-        "version": "2"
-      }
-    }
-  ],
-  "error": "X-PAYMENT header is required",
-  "x402Version": 1
+"accepts": [
+{
+"scheme": "exact",
+"network": "base",
+"maxAmountRequired": "20",
+"resource": "http://example.com/rpc",
+"description": "Call to 1 method: eth_chainId",
+"mimeType": "",
+"payTo": "0x8d6Efb97F6E3d218647eD74AF418d47489550Ae2",
+"maxTimeoutSeconds": 60,
+"asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+"extra": {
+"name": "USD Coin",
+"version": "2"
+}
+}
+],
+"error": "X-PAYMENT header is required",
+"x402Version": 1
 }

@@ -21,7 +21,7 @@ export function localFileWalletClient(): LocalAccount {
     // File doesn't exist or is invalid, create a new wallet
     const privateKey = generatePrivateKey();
     const account = privateKeyToAccount(privateKey);
-    
+
     walletData = {
       privateKey,
       address: account.address,
