@@ -15,7 +15,9 @@
   "scripts": {
     "build": "tsup",
     "start": "node build/index.js",
-    "test": "node --import tsx --test test/**/*.test.ts"
+    "test": "node --import tsx --test test/**/*.test.ts",
+    "lint": "prettier --check .",
+    "lint:fix": "prettier --write ."
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.20.2",
@@ -35,5 +37,4 @@
   "engines": {
     "node": ">=22.0.0"
   }
-
 }
