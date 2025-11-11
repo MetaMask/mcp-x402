@@ -24,7 +24,11 @@ describe("Payment Utils", () => {
     ];
 
     it("should create a valid payment header", async () => {
-      const header = await createPaymentHeader(testAccount, 1, validPaymentRequirements);
+      const header = await createPaymentHeader(
+        testAccount,
+        1,
+        validPaymentRequirements,
+      );
 
       // Should return a base64 encoded string
       assert.ok(header, "Header should not be empty");
@@ -38,7 +42,11 @@ describe("Payment Utils", () => {
     });
 
     it("should create header with correct structure when decoded", async () => {
-      const header = await createPaymentHeader(testAccount, 1, validPaymentRequirements);
+      const header = await createPaymentHeader(
+        testAccount,
+        1,
+        validPaymentRequirements,
+      );
       const decoded = JSON.parse(Buffer.from(header, "base64").toString());
 
       // Verify top-level structure
@@ -49,17 +57,33 @@ describe("Payment Utils", () => {
     });
 
     it("should create header with valid signature", async () => {
-      const header = await createPaymentHeader(testAccount, 1, validPaymentRequirements);
+      const header = await createPaymentHeader(
+        testAccount,
+        1,
+        validPaymentRequirements,
+      );
       const decoded = JSON.parse(Buffer.from(header, "base64").toString());
 
       // Verify signature exists and is valid hex
       assert.ok(decoded.payload.signature, "Signature should exist");
-      assert.match(decoded.payload.signature, /^0x[a-fA-F0-9]+$/, "Signature should be hex");
-      assert.strictEqual(decoded.payload.signature.length, 132, "Signature should be 65 bytes");
+      assert.match(
+        decoded.payload.signature,
+        /^0x[a-fA-F0-9]+$/,
+        "Signature should be hex",
+      );
+      assert.strictEqual(
+        decoded.payload.signature.length,
+        132,
+        "Signature should be 65 bytes",
+      );
     });
 
     it("should create header with valid authorization fields", async () => {
-      const header = await createPaymentHeader(testAccount, 1, validPaymentRequirements);
+      const header = await createPaymentHeader(
+        testAccount,
+        1,
+        validPaymentRequirements,
+      );
       const decoded = JSON.parse(Buffer.from(header, "base64").toString());
       const auth = decoded.payload.authorization;
 
@@ -68,16 +92,23 @@ describe("Payment Utils", () => {
       assert.strictEqual(auth.from, testAccount.address);
       assert.strictEqual(
         auth.to.toLowerCase(),
-        validPaymentRequirements[0].payTo.toLowerCase()
+        validPaymentRequirements[0].payTo.toLowerCase(),
       );
-      assert.strictEqual(auth.value, validPaymentRequirements[0].maxAmountRequired);
+      assert.strictEqual(
+        auth.value,
+        validPaymentRequirements[0].maxAmountRequired,
+      );
       assert.ok(auth.validAfter, "validAfter should exist");
       assert.ok(auth.validBefore, "validBefore should exist");
       assert.ok(auth.nonce, "nonce should exist");
     });
 
     it("should create header with valid timestamps", async () => {
-      const header = await createPaymentHeader(testAccount, 1, validPaymentRequirements);
+      const header = await createPaymentHeader(
+        testAccount,
+        1,
+        validPaymentRequirements,
+      );
       const decoded = JSON.parse(Buffer.from(header, "base64").toString());
       const auth = decoded.payload.authorization;
 
@@ -86,7 +117,10 @@ describe("Payment Utils", () => {
       const validBefore = parseInt(auth.validBefore);
 
       // validAfter should be in the past (10 minutes buffer)
-      assert.ok(validAfter < now + 60, "validAfter should be in the past or near present");
+      assert.ok(
+        validAfter < now + 60,
+        "validAfter should be in the past or near present",
+      );
 
       // validBefore should be in the future
       assert.ok(validBefore > now, "validBefore should be in the future");
@@ -95,13 +129,21 @@ describe("Payment Utils", () => {
       const timeWindow = validBefore - validAfter;
       assert.ok(
         timeWindow <= validPaymentRequirements[0].maxTimeoutSeconds + 700,
-        "Time window should respect maxTimeoutSeconds"
+        "Time window should respect maxTimeoutSeconds",
       );
     });
 
     it("should create different headers on each call due to unique nonces", async () => {
-      const header1 = await createPaymentHeader(testAccount, 1, validPaymentRequirements);
-      const header2 = await createPaymentHeader(testAccount, 1, validPaymentRequirements);
+      const header1 = await createPaymentHeader(
+        testAccount,
+        1,
+        validPaymentRequirements,
+      );
+      const header2 = await createPaymentHeader(
+        testAccount,
+        1,
+        validPaymentRequirements,
+      );
 
       // Headers should be different because nonces are random
       assert.notStrictEqual(header1, header2);
@@ -112,13 +154,13 @@ describe("Payment Utils", () => {
       // Nonces should be different
       assert.notStrictEqual(
         decoded1.payload.authorization.nonce,
-        decoded2.payload.authorization.nonce
+        decoded2.payload.authorization.nonce,
       );
 
       // Signatures should be different
       assert.notStrictEqual(
         decoded1.payload.signature,
-        decoded2.payload.signature
+        decoded2.payload.signature,
       );
     });
 
@@ -139,14 +181,18 @@ describe("Payment Utils", () => {
         },
       ];
 
-      const header = await createPaymentHeader(testAccount, 1, multipleRequirements);
+      const header = await createPaymentHeader(
+        testAccount,
+        1,
+        multipleRequirements,
+      );
       const decoded = JSON.parse(Buffer.from(header, "base64").toString());
 
       // Should use the first payment requirement
       assert.strictEqual(decoded.network, "base-sepolia");
       assert.strictEqual(
         decoded.payload.authorization.to.toLowerCase(),
-        validPaymentRequirements[0].payTo.toLowerCase()
+        validPaymentRequirements[0].payTo.toLowerCase(),
       );
     });
   });

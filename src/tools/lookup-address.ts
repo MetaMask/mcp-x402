@@ -8,12 +8,12 @@ export type LookupAddressProps = z.infer<typeof LookupAddressProps>;
 export const LookupAddress = async (args: LookupAddressProps) => {
   const walletClient = getWalletClient();
   const address = walletClient.address;
-  
+
   return {
     content: [
       {
         type: "text" as const,
-        text: address
+        text: address,
       },
     ],
   };

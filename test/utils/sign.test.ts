@@ -2,7 +2,10 @@ import { describe, it } from "node:test";
 import assert from "node:assert";
 import { createNonce, signAuthorization } from "../../src/utils/sign.js";
 import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
-import type { PayloadAuthorization, PaymentRequirements } from "../../src/types/x402-types.js";
+import type {
+  PayloadAuthorization,
+  PaymentRequirements,
+} from "../../src/types/x402-types.js";
 
 describe("Sign Utils", () => {
   describe("createNonce", () => {
@@ -57,7 +60,7 @@ describe("Sign Utils", () => {
       const result = await signAuthorization(
         testAccount,
         authorization,
-        paymentRequirements
+        paymentRequirements,
       );
 
       // Should return an object with signature
@@ -74,8 +77,16 @@ describe("Sign Utils", () => {
       const auth1 = { ...authorization, nonce: createNonce() };
       const auth2 = { ...authorization, nonce: createNonce() };
 
-      const result1 = await signAuthorization(testAccount, auth1, paymentRequirements);
-      const result2 = await signAuthorization(testAccount, auth2, paymentRequirements);
+      const result1 = await signAuthorization(
+        testAccount,
+        auth1,
+        paymentRequirements,
+      );
+      const result2 = await signAuthorization(
+        testAccount,
+        auth2,
+        paymentRequirements,
+      );
 
       // Different nonces should produce different signatures
       assert.notStrictEqual(result1.signature, result2.signature);
@@ -86,8 +97,16 @@ describe("Sign Utils", () => {
       const auth1 = { ...authorization, nonce: fixedNonce };
       const auth2 = { ...authorization, nonce: fixedNonce };
 
-      const result1 = await signAuthorization(testAccount, auth1, paymentRequirements);
-      const result2 = await signAuthorization(testAccount, auth2, paymentRequirements);
+      const result1 = await signAuthorization(
+        testAccount,
+        auth1,
+        paymentRequirements,
+      );
+      const result2 = await signAuthorization(
+        testAccount,
+        auth2,
+        paymentRequirements,
+      );
 
       // Same data should produce same signature
       assert.strictEqual(result1.signature, result2.signature);
@@ -101,12 +120,17 @@ describe("Sign Utils", () => {
 
       await assert.rejects(
         async () => {
-          await signAuthorization(invalidAccount, authorization, paymentRequirements);
+          await signAuthorization(
+            invalidAccount,
+            authorization,
+            paymentRequirements,
+          );
         },
         {
           name: "Error",
-          message: /Invalid wallet client provided does not support signTypedData/,
-        }
+          message:
+            /Invalid wallet client provided does not support signTypedData/,
+        },
       );
     });
   });

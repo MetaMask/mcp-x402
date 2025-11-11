@@ -1,5 +1,11 @@
 import { Chain, getAddress, Hex, LocalAccount, toHex, Transport } from "viem";
-import { PayloadAuthorization, PaymentRequirements, authorizationTypes, Network, NetworkToChainId } from "../types/x402-types";
+import {
+  PayloadAuthorization,
+  PaymentRequirements,
+  authorizationTypes,
+  Network,
+  NetworkToChainId,
+} from "../types/x402-types";
 /**
  * Signs an EIP-3009 authorization for USDC transfer
  *
@@ -18,7 +24,10 @@ import { PayloadAuthorization, PaymentRequirements, authorizationTypes, Network,
  * @returns The signature for the authorization
  */
 
-export const signAuthorization =async function signAuthorization<transport extends Transport, chain extends Chain>(
+export const signAuthorization = async function signAuthorization<
+  transport extends Transport,
+  chain extends Chain,
+>(
   walletClient: LocalAccount,
   { from, to, value, validAfter, validBefore, nonce }: PayloadAuthorization,
   { asset, network, extra }: PaymentRequirements,
@@ -52,9 +61,11 @@ export const signAuthorization =async function signAuthorization<transport exten
       signature,
     };
   } else {
-    throw new Error("Invalid wallet client provided does not support signTypedData");
+    throw new Error(
+      "Invalid wallet client provided does not support signTypedData",
+    );
   }
-}
+};
 
 /**
  * Generates a random 32-byte nonce for use in authorization signatures
@@ -64,13 +75,13 @@ export const signAuthorization =async function signAuthorization<transport exten
 export const createNonce = function createNonce(): Hex {
   const cryptoObj =
     typeof globalThis.crypto !== "undefined" &&
-      typeof globalThis.crypto.getRandomValues === "function"
+    typeof globalThis.crypto.getRandomValues === "function"
       ? globalThis.crypto
       : // Dynamic require is needed to support node.js
-      // eslint-disable-next-line @typescript-eslint/no-require-imports
-      require("crypto").webcrypto;
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        require("crypto").webcrypto;
   return toHex(cryptoObj.getRandomValues(new Uint8Array(32)));
-}
+};
 
 function getNetworkId(network: Network): number {
   if (NetworkToChainId.has(network)) {
@@ -78,4 +89,3 @@ function getNetworkId(network: Network): number {
   }
   throw new Error(`Unsupported network: ${network}`);
 }
-

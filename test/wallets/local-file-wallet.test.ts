@@ -29,8 +29,15 @@ describe("Local File Wallet", () => {
     // Should return a valid account
     assert.ok(account, "Account should exist");
     assert.ok(account.address, "Account should have an address");
-    assert.match(account.address, /^0x[a-fA-F0-9]{40}$/, "Should have valid address format");
-    assert.ok(account.signTypedData, "Account should have signTypedData method");
+    assert.match(
+      account.address,
+      /^0x[a-fA-F0-9]{40}$/,
+      "Should have valid address format",
+    );
+    assert.ok(
+      account.signTypedData,
+      "Account should have signTypedData method",
+    );
   });
 
   it("should return same wallet on multiple calls", () => {
@@ -46,7 +53,9 @@ describe("Local File Wallet", () => {
     const walletExists = fs.existsSync(ORIGINAL_WALLET_PATH);
 
     if (walletExists) {
-      const walletData = JSON.parse(fs.readFileSync(ORIGINAL_WALLET_PATH, "utf8"));
+      const walletData = JSON.parse(
+        fs.readFileSync(ORIGINAL_WALLET_PATH, "utf8"),
+      );
 
       // Verify wallet file structure
       assert.ok(walletData.privateKey, "Wallet file should have privateKey");
@@ -54,12 +63,12 @@ describe("Local File Wallet", () => {
       assert.match(
         walletData.privateKey,
         /^0x[a-fA-F0-9]{64}$/,
-        "Private key should be 32 bytes hex"
+        "Private key should be 32 bytes hex",
       );
       assert.match(
         walletData.address,
         /^0x[a-fA-F0-9]{40}$/,
-        "Address should be valid format"
+        "Address should be valid format",
       );
     }
   });

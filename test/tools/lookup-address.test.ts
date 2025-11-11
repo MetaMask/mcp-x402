@@ -11,14 +11,14 @@ describe("LookupAddress Tool", () => {
       const tools = await client.listTools();
 
       const lookupAddressTool = tools.tools.find(
-        (tool) => tool.name === "LookupAddress"
+        (tool) => tool.name === "LookupAddress",
       );
 
       assert.ok(lookupAddressTool, "LookupAddress tool should be defined");
       assert.strictEqual(lookupAddressTool.name, "LookupAddress");
       assert.strictEqual(
         lookupAddressTool.description,
-        "Lookup the address for account that is used to sign the payment header. Lazily create the account if it does not exist."
+        "Lookup the address for account that is used to sign the payment header. Lazily create the account if it does not exist.",
       );
     } finally {
       await close(server);

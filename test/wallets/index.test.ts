@@ -28,7 +28,11 @@ describe("Wallet Selection", () => {
 
     assert.ok(wallet, "Wallet should exist");
     assert.ok(wallet.address, "Wallet should have address");
-    assert.match(wallet.address, /^0x[a-fA-F0-9]{40}$/, "Should have valid address");
+    assert.match(
+      wallet.address,
+      /^0x[a-fA-F0-9]{40}$/,
+      "Should have valid address",
+    );
   });
 
   it("should return local file wallet when PRIVATE_KEY is not set", () => {
@@ -38,7 +42,11 @@ describe("Wallet Selection", () => {
 
     assert.ok(wallet, "Wallet should exist");
     assert.ok(wallet.address, "Wallet should have address");
-    assert.match(wallet.address, /^0x[a-fA-F0-9]{40}$/, "Should have valid address");
+    assert.match(
+      wallet.address,
+      /^0x[a-fA-F0-9]{40}$/,
+      "Should have valid address",
+    );
   });
 
   it("should prefer env wallet over local file wallet", () => {
@@ -59,11 +67,19 @@ describe("Wallet Selection", () => {
 
     // Verify the env wallet was used when PRIVATE_KEY was set
     // by checking it used the test private key we provided
-    assert.match(envWalletAddress, /^0x[a-fA-F0-9]{40}$/, "Env wallet address should be valid");
+    assert.match(
+      envWalletAddress,
+      /^0x[a-fA-F0-9]{40}$/,
+      "Env wallet address should be valid",
+    );
 
     // File wallet should be consistently the same
     const fileWallet2 = getWalletClient();
-    assert.strictEqual(fileWallet.address, fileWallet2.address, "File wallet should be consistent");
+    assert.strictEqual(
+      fileWallet.address,
+      fileWallet2.address,
+      "File wallet should be consistent",
+    );
   });
 
   it("should return wallet with signing capabilities", async () => {
@@ -88,7 +104,7 @@ describe("Wallet Selection", () => {
     assert.strictEqual(
       wallet1.address,
       wallet2.address,
-      "Should return consistent wallet"
+      "Should return consistent wallet",
     );
   });
 });
