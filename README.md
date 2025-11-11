@@ -26,7 +26,13 @@ yarn install
 yarn build
 ```
 
-## Testing
+## Automated Testing
+
+Tests can be run with
+```bash
+yarn test
+```
+## Manual Testing
 
 You can test the MCP server using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector):
 
