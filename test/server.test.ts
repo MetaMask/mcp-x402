@@ -40,7 +40,7 @@ describe("Server", () => {
         assert.strictEqual(createHeaderTool.name, "CreateX402PaymentHeader");
         assert.strictEqual(
           createHeaderTool.description,
-          "Create the payment headers for a given payment request",
+          "Create the X402 payment headers for a given payment request as per https://www.x402.org/",
         );
       } finally {
         await close(server);
