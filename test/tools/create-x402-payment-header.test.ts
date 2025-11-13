@@ -32,7 +32,7 @@ describe("CreateX402PaymentHeader Tool", () => {
       assert.strictEqual(createHeaderTool.name, "CreateX402PaymentHeader");
       assert.strictEqual(
         createHeaderTool.description,
-        "Create the payment headers for a given payment request",
+        "Create the X402 payment headers for a given payment request as per https://www.x402.org/",
       );
     } finally {
       await close(testServer);
@@ -43,7 +43,6 @@ describe("CreateX402PaymentHeader Tool", () => {
     const testServer = createServer();
     try {
       const client = await connect(testServer);
-
       const result = await client.callTool("CreateX402PaymentHeader", {
         x402Version: 1,
         accepts: validPaymentRequirements,
