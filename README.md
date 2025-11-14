@@ -67,6 +67,9 @@ A test scenario that can work well is:
 
 ## Roadmap
 
-- [ ] Testing
+- [ ] support multiple accepts, choose the best one
+- [ ] support different tokens for payment (particularly around elicitation)
+- [ ] make the wallet use an embedded server wallet
+- [ ] a setup flow particularly when this service is running on a server
 - [ ] Configurable key management and signing
 - [ ] Integration with the Delegation Toolkit https://docs.metamask.io/delegation-toolkit
