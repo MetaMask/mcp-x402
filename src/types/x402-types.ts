@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v3";
 
 export const schemes = ["exact"] as const;
 export const x402Versions = [1] as const;
@@ -51,8 +51,8 @@ export const PaymentRequirementsSchema = z.object({
   scheme: z.enum(schemes),
   network: NetworkSchema,
   maxAmountRequired: z.string().refine(isInteger),
-  // resource: z.string().url(),
-  // description: z.string(),
+  resource: z.string().url().optional(),
+  description: z.string().optional(),
   // mimeType: z.string(),
   payTo: Address,
   maxTimeoutSeconds: z.number().int(),

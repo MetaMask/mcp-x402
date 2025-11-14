@@ -29,9 +29,11 @@ yarn build
 ## Automated Testing
 
 Tests can be run with
+
 ```bash
 yarn test
 ```
+
 ## Manual Testing
 
 You can test the MCP server using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector):
@@ -65,6 +67,9 @@ A test scenario that can work well is:
 
 ## Roadmap
 
-- [ ] Testing
+- [ ] support multiple accepts, choose the best one
+- [ ] support different tokens for payment (particularly around elicitation)
+- [ ] make the wallet use an embedded server wallet
+- [ ] a setup flow particularly when this service is running on a server
 - [ ] Configurable key management and signing
 - [ ] Integration with the Delegation Toolkit https://docs.metamask.io/delegation-toolkit
