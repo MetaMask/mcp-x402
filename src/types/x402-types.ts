@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v3";
 
 export const schemes = ["exact"] as const;
 export const x402Versions = [1] as const;

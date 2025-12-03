@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod/v3";
 import { PaymentRequirementsSchema } from "../types/x402-types";
 import { getWalletClient } from "../wallets";
 import { createPaymentHeader } from "../utils/payment";

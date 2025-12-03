@@ -11,17 +11,24 @@ export function createServer() {
     version: "0.1.0",
   });
 
-  server.tool(
+  server.registerTool(
     "CreateX402PaymentHeader",
-    "Create the payment headers for a given payment request",
-    CreateX402PaymentHeaderProps.shape,
+    {
+      description:
+        "Create the X402 payment headers for a given payment request as per https://www.x402.org/",
+      inputSchema: CreateX402PaymentHeaderProps.shape,
+    },
     CreateX402PaymentHeader,
   );
 
-  server.tool(
+  server.registerTool(
     "LookupAddress",
-    "Lookup the address for account that is used to sign the payment header. Lazily create the account if it does not exist.",
-    LookupAddressProps.shape,
+
+    {
+      description:
+        "Lookup the address for account that is used to sign the payment header. Lazily create the account if it does not exist.",
+      inputSchema: LookupAddressProps.shape,
+    },
     LookupAddress,
   );
 
