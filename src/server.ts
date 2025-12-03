@@ -2,6 +2,7 @@ import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import {
   CreateX402PaymentHeaderProps,
   CreateX402PaymentHeader,
+  initCreatePaymentRequirements,
 } from "./tools/create-x402-payment-header.js";
 import { LookupAddressProps, LookupAddress } from "./tools/lookup-address.js";
 
@@ -32,5 +33,6 @@ export function createServer() {
     LookupAddress,
   );
 
+  initCreatePaymentRequirements(server);
   return server;
 }

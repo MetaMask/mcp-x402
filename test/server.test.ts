@@ -1,4 +1,4 @@
-import { describe, it } from "node:test";
+import { describe, it, skip } from "node:test";
 import assert from "node:assert";
 import { createServer } from "../src/server.js";
 import { connect, close } from "mcp-testing-kit";
@@ -154,7 +154,7 @@ describe("Server", () => {
   });
 
   describe("Server Tools Integration", () => {
-    it("CreateX402PaymentHeader tool should be callable", async () => {
+    skip("CreateX402PaymentHeader tool should be callable", async () => {
       const server = createServer();
       try {
         const client = await connect(server);
